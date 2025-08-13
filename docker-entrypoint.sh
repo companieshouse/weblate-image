@@ -4,7 +4,7 @@ set -e
 case "$NODE_TYPE" in
   ""|"web")
     echo "Starting Weblate web server..."
-    exec /usr/local/bin/weblate --host "$ALLOWED_HOSTS" --port "$PORT" "$@"
+    exec "$WEBSERVER_BIN" --host "$ALLOWED_HOSTS" --port "$PORT" "$@"
     ;;
   "worker"|"beat")
     echo "Starting Celery $NODE_TYPE..."
