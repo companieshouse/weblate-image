@@ -4,6 +4,7 @@ FROM weblate/weblate:${WEBLATE_VERSION}
 
 ENV ENTRYPOINT_PATH=/usr/local/bin/docker-entrypoint.sh
 
+USER root
 COPY docker-entrypoint.sh $ENTRYPOINT_PATH
 RUN chmod +x $ENTRYPOINT_PATH
 
