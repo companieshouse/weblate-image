@@ -1,4 +1,4 @@
-# /etc/nginx/conf.d/extra-locations.weblate
+# /etc/nginx/extra-locations.weblate
 
     # Redirect enforcing a trailing slash on URLs:
     #      /weblate --> /weblate/
