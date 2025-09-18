@@ -12,5 +12,10 @@ RUN chmod 1777 /tmp \
     && /app/venv/bin/python3 get-pip.py \
     && /app/venv/bin/pip install --no-cache-dir --upgrade setuptools wheel  \
     && /app/venv/bin/pip install --no-cache-dir "django-storages[boto3]" \
+    && mkdir -p /home/weblate/.ssh \
+    && chmod 700 /home/weblate/.ssh \
+    && ssh-keyscan github.com >> /home/weblate/.ssh/known_hosts \
+    && chmod 644 /home/weblate/.ssh/known_hosts \
+    && chown -R weblate:weblate /home/weblate/.ssh \
     && rm -rf /var/lib/apt/lists/*
 USER weblate
