@@ -1,4 +1,4 @@
-# ci-weblate-image
+# weblate-image
 
 A Docker image to use in the ECS Task-definitions of both of the following Weblate components: 
  - Web server
