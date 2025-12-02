@@ -22,4 +22,8 @@ RUN chmod 1777 /tmp \
     && chmod 644 /home/weblate/.ssh/known_hosts \
     && chown -R weblate:weblate /home/weblate/.ssh \
     && rm -rf /var/lib/apt/lists/*
+
+COPY init_resources /init_resources
+RUN chmod +x /init_resources/init_resources.sh
+
 USER weblate
