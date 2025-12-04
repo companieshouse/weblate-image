@@ -2,6 +2,17 @@ ARG WEBLATE_VERSION="latest"
 
 FROM weblate/weblate:${WEBLATE_VERSION}
 
+# --- Added to neutralise inherited entrypoint ---
+# weblate image defines: "Entrypoint": ["/app/bin/start"] and "Cmd": ["runserver"]
+# but our ECS terraform module has only a "container_command" var to override "Cmd"
+# while "Entrypoint" remains the one backed in the image
+ENTRYPOINT []
+# --- Added to reproduce original ENTRYPOINT + CMD behavior ---
+# Having no "Entrypoint" and only "Cmd", allows to launch ECS tasks off this image
+# with a variable command which can override this CMD
+CMD ["/app/bin/start", "runserver"]
+# --------------------------------------------------------------
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
