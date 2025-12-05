@@ -2,15 +2,14 @@
 
 -- 1) Create Weblate user if it does not exist
 --    (idempotent)
-DO $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT FROM pg_catalog.pg_roles WHERE rolname = :'user'
-    ) THEN
-        EXECUTE format('CREATE USER %I WITH PASSWORD %L', :'user', :'password');
-    END IF;
-END;
-$$;
+SELECT format(
+    'CREATE ROLE %I LOGIN PASSWORD %L',
+    :'user',
+    :'password'
+)
+WHERE NOT EXISTS (
+    SELECT 1 FROM pg_roles WHERE rolname = :'user'
+)\gexec
 
 -- 2) Connect,Create,... permissions
 --    (idempotent)
