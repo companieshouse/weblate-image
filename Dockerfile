@@ -6,10 +6,8 @@ FROM weblate/weblate:${WEBLATE_VERSION}
 # weblate image defines: "Entrypoint": ["/app/bin/start"] and "Cmd": ["runserver"]
 # but our ECS terraform module has only a "container_command" var to override "Cmd"
 # while "Entrypoint" remains the one backed in the image
-ENTRYPOINT []
+ENTRYPOINT ["/entrypoint/entrypoint.sh"]
 # --- Added to reproduce original ENTRYPOINT + CMD behavior ---
-# Having no "Entrypoint" and only "Cmd", allows to launch ECS tasks off this image
-# with a variable command which can override this CMD
 CMD ["/app/bin/start", "runserver"]
 # --------------------------------------------------------------
 
@@ -34,7 +32,7 @@ RUN chmod 1777 /tmp \
     && chown -R weblate:weblate /home/weblate/.ssh \
     && rm -rf /var/lib/apt/lists/*
 
-COPY init_resources /init_resources
-RUN chmod +x /init_resources/init_resources.sh
+COPY entrypoint /entrypoint
+RUN chmod +x /entrypoint/entrypoint.sh /entrypoint/init_resources.sh
 
 USER weblate
