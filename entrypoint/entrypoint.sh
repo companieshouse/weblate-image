@@ -7,6 +7,7 @@
 if [[ ! -f /tmp/resource_initialised && $WEBLATE_SERVICE == "celery-beat" ]]; then
     /entrypoint/init_resources.sh
     touch /tmp/resource_initialised
+    unset PGPASSWORD PSQL_MASTER_USER
 fi
 
 # 2nd - run any passed CMD (default or ECS override)
